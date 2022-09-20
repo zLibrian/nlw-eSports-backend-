@@ -1,8 +1,16 @@
-import express from 'express'
-const app = express()
+import express from "express";
+import cors from "cors";
 
-app.get('/test', (_req, res)=> {
-  return res.status(200).json({ message: "Teste" })
-})
+import adRouter from "./routes/adRouter";
+import gameRouter from "./routes/gameRouter";
 
-app.listen(3000)
+const PORT: string = process.env.PORT || "3000";
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+
+app.use("/ads", adRouter);
+app.use("/games", gameRouter);
+
+app.listen(PORT, () => console.log(`Escutando na porta ${PORT}`));
